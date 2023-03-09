@@ -4,17 +4,12 @@ require_once __DIR__ . '/../functions/createCard.php';
 
 class Band
 {
-    private int $id;
-    private string $name;
-    private int $date;
-    private Style $style;
-
-    public function __construct(int $id, string $name, int $date, Style $style)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->date = $date;
-        $this->style = $style;
+    public function __construct(
+        private int $id, 
+        private string $name, 
+        private int $date, 
+        private Style $style
+        ){
     }
 
     // Getters

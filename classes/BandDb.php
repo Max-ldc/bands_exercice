@@ -5,24 +5,20 @@ class BandDb
     private array $bands;
     private const BANDS_DB_PATH = __DIR__ . '/../bands.txt';
 
-    public function __construct(array $styles)
+    public function __construct(StylesDb $stylesDb)
     {
         $bandsDb = $this->getBandsFromDb();
         // décomposition de chaque ligne et création des classes Band
-        foreach ($bandsDb as $band) {
-            $bandArray = explode(",", $band); // 1 ligne explosée
-            $this->bands[] = new Band($bandArray[0], $bandArray[1], $bandArray[2], findBandStyle($bandArray[3], $styles)); // création du tableau de classes à partir de chaque ligne explosée
+        foreach ($bandsDb as $line) {
+            $lineInfos = explode(",", $line); // 1 ligne explosée
+            [$id, $name, $date, $styleId] = $lineInfos; // destructuring pour placer les infos dans les variables correspondantes
+            $this->bands[] = new Band($id, $name, $date, findBandStyle($styleId, $stylesDb)); // création du tableau de classes à partir des variables
         }
     }
 
     private function getBandsFromDb(): array        // récupère la liste des groupes dans le fichier .txt
     {
-        $bandsFileContent = file_get_contents(self::BANDS_DB_PATH);
-
-        return array_filter(                
-            explode(PHP_EOL, $bandsFileContent),
-            fn ($band) => $band !== ''
-        );
+        return file(self::BANDS_DB_PATH, FILE_IGNORE_NEW_LINES);
     }
 
     public function getBands(): array       // Getter pour la liste des groupes

@@ -7,9 +7,9 @@
  * @param array $styles styles list
  * @return Style
  */
-function findBandStyle(int $id, array $styles) : Style
+function findBandStyle(int $id, StylesDb $stylesDb) : Style
 {
-    foreach ($styles as $style) {
+    foreach ($stylesDb->getStyles() as $style) {
         if ($style->getId() === $id) {
             return $style;
         }

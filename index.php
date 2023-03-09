@@ -7,11 +7,10 @@ require_once 'classes/Style.php';
 require_once 'layout/header.php';
 
 // création database des styles de musique
-$styledb = new Styledb();
-$styles = $styledb->getStyles();
+$styledb = new StylesDb();
 
 // création database des groupes de musique
-$banddb = new BandDb($styles);
+$banddb = new BandDb($styledb);
 $bands = $banddb->getBands();
 ?>
 
